@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Carpanion — Diagnose car issues & find trusted mechanics</title>
   <meta name="description" content="Carpanion helps you gauge severity, understand likely causes, and call a vetted shop fast." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%230a7a4b' d='M47.24 24 24 47.24.76 24 24 .76 47.24 24zM12.24 21h23.52L24 9.24 12.24 21z'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%230c7ff2' d='M47.24 24 24 47.24.76 24 24 .76 47.24 24zM12.24 21h23.52L24 9.24 12.24 21z'/%3E%3C/svg%3E">
 
   <!-- Tailwind (CDN for MVP). For prod, compile to purge unused classes. -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -15,26 +15,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-  <!-- Preload hero for faster LCP -->
+  <!-- Preload first hero image for LCP -->
   <link rel="preload" as="image"
-        href="https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
-        imagesrcset="https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=800 800w,
-                     https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1200 1200w,
-                     https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1600 1600w"
+        href="https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
+        imagesrcset="https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=800 800w,
+                     https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1200 1200w,
+                     https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600 1600w"
         imagesizes="100vw" fetchpriority="high">
 
   <!-- (Optional) PostHog snippet goes here to capture events automatically -->
 
   <style type="text/tailwindcss">
     :root {
-      /* Outdoorsy / Rivian‑ish palette */
-      --primary: #0a7a4b;       /* forest green */
-      --primary-ink: #0b3326;   /* deep pine */
-      --bg: #f6f5f1;            /* sand / off‑white */
+      /* Blue palette */
+      --primary: #0c7ff2;       /* vivid blue */
+      --primary-ink: #0b2346;   /* deep blue ink */
+      --bg: #f7f9fc;            /* cool off-white */
       --card: #ffffff;          /* card background */
-      --text: #0f1a17;          /* charcoal */
-      --muted: #5b6b63;         /* sage gray */
-      --ring: rgba(10, 122, 75, 0.35);
+      --text: #111418;          /* charcoal */
+      --muted: #5e6b7a;         /* slate */
+      --ring: rgba(12, 127, 242, 0.35);
     }
     html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif; }
     .btn-primary {
@@ -42,23 +42,24 @@
       background: var(--primary);
       color: #fff;
     }
-    .btn-primary:hover { background: #0a6e45; }
+    .btn-primary:hover { background: #0a6ed4; }
     .btn-outline {
       @apply inline-flex items-center justify-center rounded-xl font-bold border;
-      border-color: rgba(255,255,255,.9);
+      border-color: rgba(255,255,255,.95);
       color: #fff;
     }
     .btn-outline:hover { @apply bg-white; color: var(--primary); }
-    .card { @apply rounded-2xl shadow-sm; background: var(--card); border: 1px solid #ecf0eb; }
-    .chip { @apply rounded-full px-3 py-1 text-xs font-semibold; background: #eaf5ef; color: var(--primary-ink); cursor: pointer; }
-    .chip:hover { background:#dff0e7; }
+    .card { @apply rounded-2xl shadow-sm; background: var(--card); border: 1px solid #e8edf5; }
+    .chip { @apply rounded-full px-3 py-1 text-xs font-semibold select-none; background: #e7f1fe; color: var(--primary-ink); cursor: pointer; }
+    .chip:hover { background:#dcedff; }
     .glass { background: rgba(255,255,255,0.75); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .hero-img { @apply absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out; }
   </style>
 </head>
 <body class="bg-[var(--bg)] text-[var(--text)]">
   <div class="min-h-dvh flex flex-col">
     <!-- Header -->
-    <header class="sticky top-0 z-40 border-b border-[#e9efe9] glass">
+    <header class="sticky top-0 z-40 border-b border-[#e6ecf5] glass">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
         <a href="#" class="flex items-center gap-3" aria-label="Carpanion home">
           <svg class="h-8 w-8 text-[var(--primary)]" viewBox="0 0 48 48" aria-hidden="true">
@@ -81,14 +82,14 @@
              class="btn-primary h-10 rounded-xl px-4 text-sm focus-visible:ring-[var(--primary)]">
             Call now
           </a>
-          <button id="menuBtn" class="md:hidden size-10 grid place-items-center rounded-lg hover:bg-[#eef3ef]" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
+          <button id="menuBtn" class="md:hidden size-10 grid place-items-center rounded-lg hover:bg-[#eef3ff]" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
             <svg class="size-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </button>
         </div>
       </div>
-      <div id="mobileNav" class="md:hidden hidden border-t border-[#e9efe9] bg-white">
+      <div id="mobileNav" class="md:hidden hidden border-t border-[#e6ecf5] bg-white">
         <div class="px-4 py-3 flex flex-col gap-2">
           <a href="#how" class="py-2">How it works</a>
           <a href="#why" class="py-2">Why us</a>
@@ -99,17 +100,18 @@
     </header>
 
     <main class="flex-1">
-      <!-- Hero -->
+      <!-- Hero (rotating images) -->
       <section class="relative isolate">
-        <img
-          src="https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
-          alt=""
-          class="absolute inset-0 -z-10 h-full w-full object-cover"
-          loading="eager" decoding="async" fetchpriority="high">
-        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/55 to-[#0b3326]/70"></div>
+        <!-- Cross-fading images -->
+        <img id="heroA" class="hero-img" alt="" loading="eager" decoding="async" fetchpriority="high"
+             src="https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3">
+        <img id="heroB" class="hero-img opacity-0" alt="" loading="lazy" decoding="async"
+             src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3">
+        <!-- Blue gradient overlay -->
+        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/55 to-[#0b2346]/70"></div>
 
-        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center text-white">
-          <span class="chip select-none">Beta</span>
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center text-white relative">
+          <span class="chip">Beta</span>
           <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
             Diagnose car issues and find trustworthy mechanics
           </h1>
@@ -166,15 +168,16 @@
         </div>
         <div class="mx-auto max-w-5xl mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="card overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="" class="h-56 w-full object-cover">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Mechanic inspecting an engine bay" class="h-56 w-full object-cover">
             <div class="p-5"><h3 class="text-xl font-semibold">Transparency</h3><p class="mt-2 text-[var(--muted)]">Understand your car’s condition and likely repair paths upfront.</p></div>
           </div>
           <div class="card overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1515920585569-0129e8d9a86b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="" class="h-56 w-full object-cover">
+            <!-- Replaced QUALITY image with reliable tools/bench image -->
+            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Technician tools and parts on a workbench" class="h-56 w-full object-cover">
             <div class="p-5"><h3 class="text-xl font-semibold">Quality</h3><p class="mt-2 text-[var(--muted)]">Shops are filtered by rating, distance, and review similarity.</p></div>
           </div>
           <div class="card overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="" class="h-56 w-full object-cover">
+            <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Driver getting help by phone" class="h-56 w-full object-cover">
             <div class="p-5"><h3 class="text-xl font-semibold">Support</h3><p class="mt-2 text-[var(--muted)]">We guide you with clear next steps and offer to dial a shop.</p></div>
           </div>
         </div>
@@ -226,7 +229,7 @@
             </a>
           </div>
 
-          <div class="mt-8 flex flex-col items-center justify-between gap-6 sm:flex-row border-t border-[#e9efe9] pt-6">
+          <div class="mt-8 flex flex-col items-center justify-between gap-6 sm:flex-row border-t border-[#e6ecf5] pt-6">
             <div class="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2">
               <a id="privacyLink" href="#" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Privacy</a>
               <a id="termsLink" href="#" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Terms</a>
@@ -258,9 +261,9 @@
             <svg viewBox="0 0 24 24" class="w-4 h-4" aria-hidden="true"><path fill="currentColor" d="M7 10h10l1 3H6l1-3Z"/></svg>
           </div>
           <p class="font-semibold">Carpanion Assistant</p>
-          <span class="chip select-none">Live beta</span>
+          <span class="chip">Live beta</span>
         </div>
-        <button id="chatClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ef]" aria-label="Close chat">✕</button>
+        <button id="chatClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ff]" aria-label="Close chat">✕</button>
       </div>
       <div class="h-full">
         <iframe id="chatFrame" title="Carpanion chat" src="about:blank" class="w-full h-[calc(100%-44px)]" referrerpolicy="no-referrer" allow="clipboard-write; microphone"></iframe>
@@ -268,15 +271,15 @@
     </div>
   </div>
 
-  <!-- Diagnosis (Fact Sheet) modal -->
+  <!-- Diagnosis (Fact Sheet) modal: responsive max-height + internal scroll -->
   <div id="diagModal" class="fixed inset-0 z-50 hidden">
     <div class="absolute inset-0 bg-black/40" id="diagBackdrop"></div>
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(720px,95vw)] card">
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(760px,95vw)] card max-h-[90vh] flex flex-col">
       <div class="flex items-center justify-between px-4 py-3 border-b">
         <h3 class="text-lg font-semibold">Start a quick diagnosis</h3>
-        <button id="diagClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ef]" aria-label="Close">✕</button>
+        <button id="diagClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ff]" aria-label="Close">✕</button>
       </div>
-      <form id="diagForm" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <form id="diagForm" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto">
         <div><label class="text-sm font-medium">Year</label><input name="y" type="number" min="1980" max="2026" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 2016"></div>
         <div><label class="text-sm font-medium">Make</label><input name="make" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., Toyota"></div>
         <div><label class="text-sm font-medium">Model</label><input name="model" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., Camry"></div>
@@ -321,7 +324,7 @@
         </div>
 
         <div class="sm:col-span-2 flex items-center justify-end gap-3 pt-2">
-          <button type="button" id="diagCancel" class="rounded-xl px-4 h-10 bg-[#eef3ef]">Cancel</button>
+          <button type="button" id="diagCancel" class="rounded-xl px-4 h-10 bg-[#eef3ff]">Cancel</button>
           <button type="submit" class="btn-primary rounded-xl px-4 h-10">Start diagnosis</button>
         </div>
         <p class="sm:col-span-2 text-xs text-[var(--muted)] mt-1">For safety‑critical symptoms, do not drive. Informational guidance only.</p>
@@ -333,7 +336,7 @@
   <div id="legalModal" class="fixed inset-0 z-50 hidden">
     <div class="absolute inset-0 bg-black/40" id="legalBackdrop"></div>
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(920px,95vw)] max-h-[80vh] overflow-auto card">
-      <div class="flex items-center justify-between px-4 py-3 border-b"><h3 id="legalTitle" class="text-lg font-semibold">Legal</h3><button id="legalClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ef]" aria-label="Close">✕</button></div>
+      <div class="flex items-center justify-between px-4 py-3 border-b"><h3 id="legalTitle" class="text-lg font-semibold">Legal</h3><button id="legalClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ff]" aria-label="Close">✕</button></div>
       <div id="legalBody" class="p-5 text-sm leading-6 text-[var(--muted)]">
         <p><strong>Template only — not legal advice.</strong> Replace this modal by configuring external URLs for your Privacy Policy and Terms of Service.</p>
         <h4 class="mt-4 font-semibold">Privacy Policy (template)</h4>
@@ -344,7 +347,7 @@
     </div>
   </div>
 
-  <!-- Minimal JS: mobile nav + chat + analytics + feedback + diagnosis -->
+  <!-- Minimal JS: nav + hero rotation + chat + analytics + feedback + diagnosis -->
   <script>
     // --- Config: set these for production ---
     const CHAT_URL    = "https://chat.example.com/widget"; // TODO: set to your BE chat URL
@@ -355,6 +358,41 @@
     const btn = document.getElementById('menuBtn');
     const nav = document.getElementById('mobileNav');
     if (btn) btn.addEventListener('click', () => { const open = nav.classList.toggle('hidden') ? 'false' : 'true'; btn.setAttribute('aria-expanded', open); });
+
+    // --- Hero rotator (cross-fade) ---
+    (function () {
+      const photos = [
+        "https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+        "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+        "https://images.unsplash.com/photo-1512499586596-ec87c979eaa0?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+        "https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
+        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
+      ];
+      let idx = 0, usingA = true, timer = null;
+      const a = document.getElementById('heroA');
+      const b = document.getElementById('heroB');
+
+      // Preload all
+      photos.slice(1).forEach(src => { const img = new Image(); img.src = src; });
+
+      function swap() {
+        const next = (idx + 1) % photos.length;
+        const nextSrc = photos[next];
+        const active = usingA ? a : b;
+        const hidden = usingA ? b : a;
+        hidden.src = nextSrc;
+        // Force reflow before fade for Safari
+        hidden.getBoundingClientRect();
+        active.classList.add('opacity-0');
+        hidden.classList.remove('opacity-0');
+        idx = next;
+        usingA = !usingA;
+      }
+      function start() { if (!timer) timer = setInterval(() => { if (!document.hidden) swap(); }, 6000); }
+      function stop()  { clearInterval(timer); timer = null; }
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+      start();
+    })();
 
     // --- Analytics (PostHog compatible + optional webhook) ---
     (function () {
@@ -390,30 +428,30 @@
         send("phone_click", { shop_id: "call_agent", shop_name: "call_agent", phone_number: el.getAttribute("data-phone") || "" });
       });
 
-      // Chat launcher
+      // Chat launcher + Diagnosis integration
       const launcher = document.getElementById('chatLauncher');
-      const modal = document.getElementById('chatModal');
-      const frame = document.getElementById('chatFrame');
-      const backdrop = document.getElementById('chatBackdrop');
-      const closeBtn = document.getElementById('chatClose');
+      const chatModal = document.getElementById('chatModal');
+      const chatFrame = document.getElementById('chatFrame');
+      const chatBackdrop = document.getElementById('chatBackdrop');
+      const chatClose = document.getElementById('chatClose');
 
       function openChat(params = {}) {
         if (!CHAT_URL) { alert("Chat not configured yet."); return; }
-        modal.classList.remove('hidden');
+        chatModal.classList.remove('hidden');
         const url = new URL(CHAT_URL);
         url.searchParams.set("sid", sessionId);
         for (const [k, v] of Object.entries(params)) {
           if (v != null && String(v).trim() !== "") url.searchParams.set(k, String(v).trim());
         }
-        frame.src = url.toString();
+        chatFrame.src = url.toString();
         send("chat_open", { with_params: Object.keys(params).length > 0 });
       }
-      function closeChat() { modal.classList.add('hidden'); frame.src = "about:blank"; }
+      function closeChat() { chatModal.classList.add('hidden'); chatFrame.src = "about:blank"; }
 
       launcher?.addEventListener('click', () => openChat());
-      closeBtn?.addEventListener('click', closeChat);
-      backdrop?.addEventListener('click', closeChat);
-      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeChat(); });
+      chatClose?.addEventListener('click', closeChat);
+      chatBackdrop?.addEventListener('click', closeChat);
+      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !chatModal.classList.contains('hidden')) closeChat(); });
 
       // Diagnosis modal wiring
       const diagBtn = document.getElementById('startDiagBtn');
@@ -425,13 +463,13 @@
       const symptomsBox = document.getElementById('symptomsBox');
       const chipsWrap = document.getElementById('symptomChips');
 
-      const openDiag = () => diagModal.classList.remove('hidden');
+      const openDiag = () => { diagModal.classList.remove('hidden'); setTimeout(() => symptomsBox?.focus(), 50); };
       const closeDiag = () => diagModal.classList.add('hidden');
 
       // Symptom chips → append de‑duplicated tokens to textarea
       function addChipText(text) {
         const current = symptomsBox.value.trim();
-        const tokens = current ? current.split(/,\\s*/).map(s => s.trim()).filter(Boolean) : [];
+        const tokens = current ? current.split(/,\s*/).map(s => s.trim()).filter(Boolean) : [];
         if (!tokens.includes(text)) tokens.push(text);
         symptomsBox.value = tokens.join(", ");
         send("symptom_chip_click", { text });
