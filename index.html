@@ -23,37 +23,30 @@
                      https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600 1600w"
         imagesizes="100vw" fetchpriority="high">
 
-  <!-- (Optional) PostHog snippet goes here to capture events automatically -->
+  <!-- Optional: PostHog snippet can go here -->
 
   <style type="text/tailwindcss">
     :root {
-      /* Blue palette */
       --primary: #0c7ff2;       /* vivid blue */
       --primary-ink: #0b2346;   /* deep blue ink */
       --bg: #f7f9fc;            /* cool off-white */
-      --card: #ffffff;          /* card background */
-      --text: #111418;          /* charcoal */
-      --muted: #5e6b7a;         /* slate */
+      --card: #ffffff;
+      --text: #111418;
+      --muted: #5e6b7a;
       --ring: rgba(12, 127, 242, 0.35);
     }
     html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif; }
-    .btn-primary {
-      @apply inline-flex items-center justify-center rounded-xl font-bold focus:outline-none focus-visible:ring-2;
-      background: var(--primary);
-      color: #fff;
-    }
-    .btn-primary:hover { background: #0a6ed4; }
-    .btn-outline {
-      @apply inline-flex items-center justify-center rounded-xl font-bold border;
-      border-color: rgba(255,255,255,.95);
-      color: #fff;
-    }
+    .btn-primary { @apply inline-flex items-center justify-center rounded-xl font-bold focus:outline-none focus-visible:ring-2; background: var(--primary); color:#fff; }
+    .btn-primary:hover { background:#0a6ed4; }
+    .btn-outline { @apply inline-flex items-center justify-center rounded-xl font-bold border; border-color: rgba(255,255,255,.95); color:#fff; }
     .btn-outline:hover { @apply bg-white; color: var(--primary); }
-    .card { @apply rounded-2xl shadow-sm; background: var(--card); border: 1px solid #e8edf5; }
-    .chip { @apply rounded-full px-3 py-1 text-xs font-semibold select-none; background: #e7f1fe; color: var(--primary-ink); cursor: pointer; }
+    .card { @apply rounded-2xl shadow-sm; background: var(--card); border:1px solid #e8edf5; }
+    .chip { @apply rounded-full px-3 py-1 text-xs font-semibold select-none; background:#e7f1fe; color:var(--primary-ink); cursor:pointer; }
     .chip:hover { background:#dcedff; }
-    .glass { background: rgba(255,255,255,0.75); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .glass { background:rgba(255,255,255,.75); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
     .hero-img { @apply absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out; }
+    .field-note { @apply text-xs text-[var(--muted)] mt-1; }
+    .disabled { opacity:.6; pointer-events:none; }
   </style>
 </head>
 <body class="bg-[var(--bg)] text-[var(--text)]">
@@ -62,9 +55,7 @@
     <header class="sticky top-0 z-40 border-b border-[#e6ecf5] glass">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
         <a href="#" class="flex items-center gap-3" aria-label="Carpanion home">
-          <svg class="h-8 w-8 text-[var(--primary)]" viewBox="0 0 48 48" aria-hidden="true">
-            <path fill="currentColor" d="M47.24 24 24 47.24.76 24 24 .76 47.24 24zM12.24 21h23.52L24 9.24 12.24 21z"/>
-          </svg>
+          <svg class="h-8 w-8 text-[var(--primary)]" viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M47.24 24 24 47.24.76 24 24 .76 47.24 24zM12.24 21h23.52L24 9.24 12.24 21z"/></svg>
           <span class="text-xl font-extrabold tracking-tight">Carpanion</span>
         </a>
 
@@ -76,16 +67,9 @@
         </nav>
 
         <div class="flex items-center gap-3">
-          <a href="tel:+15705399931"
-             data-event="phone_click"
-             data-phone="+15705399931"
-             class="btn-primary h-10 rounded-xl px-4 text-sm focus-visible:ring-[var(--primary)]">
-            Call now
-          </a>
+          <a href="tel:+15705399931" data-event="phone_click" data-phone="+15705399931" class="btn-primary h-10 rounded-xl px-4 text-sm focus-visible:ring-[var(--primary)]">Call now</a>
           <button id="menuBtn" class="md:hidden size-10 grid place-items-center rounded-lg hover:bg-[#eef3ff]" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
-            <svg class="size-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <svg class="size-6" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
         </div>
       </div>
@@ -102,35 +86,20 @@
     <main class="flex-1">
       <!-- Hero (rotating images) -->
       <section class="relative isolate">
-        <!-- Cross-fading images -->
         <img id="heroA" class="hero-img" alt="" loading="eager" decoding="async" fetchpriority="high"
              src="https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3">
         <img id="heroB" class="hero-img opacity-0" alt="" loading="lazy" decoding="async"
              src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3">
-        <!-- Blue gradient overlay -->
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/55 to-[#0b2346]/70"></div>
 
         <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center text-white relative">
           <span class="chip">Beta</span>
-          <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
-            Diagnose car issues and find trustworthy mechanics
-          </h1>
-          <p class="mt-6 text-lg sm:text-xl text-gray-200">
-            Clear severity, likely causes, and a shortlist of vetted shops—fast.
-          </p>
+          <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">Diagnose car issues and find trustworthy mechanics</h1>
+          <p class="mt-6 text-lg sm:text-xl text-gray-200">Clear severity, likely causes, and a shortlist of vetted shops—fast.</p>
           <div class="mt-10 flex flex-wrap justify-center gap-4">
-            <a href="tel:+15705399931"
-               data-event="phone_click"
-               data-phone="+15705399931"
-               class="btn-primary h-12 rounded-xl px-6 text-base">
-              Tap to call now
-            </a>
-            <button id="startDiagBtn" class="btn-primary h-12 rounded-xl px-6 text-base">
-              Start diagnosis
-            </button>
-            <a href="#how" class="btn-outline h-12 rounded-xl px-6 text-base border-white">
-              Learn more
-            </a>
+            <a href="tel:+15705399931" data-event="phone_click" data-phone="+15705399931" class="btn-primary h-12 rounded-xl px-6 text-base">Tap to call now</a>
+            <button id="startDiagBtn" class="btn-primary h-12 rounded-xl px-6 text-base">Start diagnosis</button>
+            <a href="#how" class="btn-outline h-12 rounded-xl px-6 text-base border-white">Learn more</a>
           </div>
         </div>
       </section>
@@ -163,16 +132,13 @@
 
       <!-- Why choose us -->
       <section id="why" class="px-4 sm:px-6 lg:px-8 py-16">
-        <div class="mx-auto max-w-5xl text-center">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Why Carpanion?</h2>
-        </div>
+        <div class="mx-auto max-w-5xl text-center"><h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Why Carpanion?</h2></div>
         <div class="mx-auto max-w-5xl mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="card overflow-hidden">
             <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Mechanic inspecting an engine bay" class="h-56 w-full object-cover">
             <div class="p-5"><h3 class="text-xl font-semibold">Transparency</h3><p class="mt-2 text-[var(--muted)]">Understand your car’s condition and likely repair paths upfront.</p></div>
           </div>
           <div class="card overflow-hidden">
-            <!-- Replaced QUALITY image with reliable tools/bench image -->
             <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Technician tools and parts on a workbench" class="h-56 w-full object-cover">
             <div class="p-5"><h3 class="text-xl font-semibold">Quality</h3><p class="mt-2 text-[var(--muted)]">Shops are filtered by rating, distance, and review similarity.</p></div>
           </div>
@@ -200,6 +166,8 @@
           <!-- Feedback form -->
           <form id="feedbackForm" class="card mt-10 p-5">
             <h3 class="text-lg font-semibold">How helpful was Carpanion?</h3>
+            <!-- Honeypot anti-bot field -->
+            <input type="text" name="hp_website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
             <div class="mt-3 flex items-center gap-2" role="radiogroup" aria-label="Rating">
               <label class="flex items-center gap-1"><input type="radio" name="stars" value="1" class="text-[var(--primary)]"> 1</label>
               <label class="flex items-center gap-1"><input type="radio" name="stars" value="2" class="text-[var(--primary)]"> 2</label>
@@ -208,9 +176,11 @@
               <label class="flex items-center gap-1"><input type="radio" name="stars" value="5" class="text-[var(--primary)]"> 5</label>
             </div>
             <textarea name="comment" rows="3" class="mt-3 w-full rounded-xl border-gray-200" placeholder="Optional: what worked or didn’t?"></textarea>
+            <p class="field-note">One submission per session to prevent spam.</p>
             <div class="mt-4 flex items-center gap-3">
-              <button class="btn-primary h-10 rounded-xl px-4" type="submit">Submit</button>
+              <button id="feedbackSubmit" class="btn-primary h-10 rounded-xl px-4" type="submit">Submit</button>
               <p id="feedbackThanks" class="text-sm text-[var(--muted)] hidden">Thanks for your feedback!</p>
+              <p id="feedbackOnce" class="text-sm text-[var(--muted)] hidden">Feedback already submitted for this session.</p>
             </div>
           </form>
         </div>
@@ -224,9 +194,7 @@
               <h3 class="text-2xl font-bold">Ready to talk to a shop?</h3>
               <p class="text-[var(--muted)] mt-1">Tap to call now. Typical wait &lt; 1 minute.</p>
             </div>
-            <a href="tel:+15705399931" data-event="phone_click" data-phone="+15705399931" class="btn-primary h-12 rounded-xl px-6 text-base">
-              Call +1 (570) 539‑9931
-            </a>
+            <a href="tel:+15705399931" data-event="phone_click" data-phone="+15705399931" class="btn-primary h-12 rounded-xl px-6 text-base">Call +1 (570) 539‑9931</a>
           </div>
 
           <div class="mt-8 flex flex-col items-center justify-between gap-6 sm:flex-row border-t border-[#e6ecf5] pt-6">
@@ -243,8 +211,7 @@
   </div>
 
   <!-- Chat launcher -->
-  <button id="chatLauncher" class="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full px-4 py-3 shadow-lg"
-          style="background: var(--primary); color: #fff;">
+  <button id="chatLauncher" class="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full px-4 py-3 shadow-lg" style="background: var(--primary); color:#fff;">
     <span class="inline-flex items-center justify-center rounded-full bg-white/90 text-[var(--primary)]" style="width:32px;height:32px">
       <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path fill="currentColor" d="M7 10h10l1 3H6l1-3Zm1-5h8l1 3H7l1-3Zm-3 9h14l-1 3H6l-1-3Z"/></svg>
     </span>
@@ -265,9 +232,7 @@
         </div>
         <button id="chatClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ff]" aria-label="Close chat">✕</button>
       </div>
-      <div class="h-full">
-        <iframe id="chatFrame" title="Carpanion chat" src="about:blank" class="w-full h-[calc(100%-44px)]" referrerpolicy="no-referrer" allow="clipboard-write; microphone"></iframe>
-      </div>
+      <div class="h-full"><iframe id="chatFrame" title="Carpanion chat" src="about:blank" class="w-full h-[calc(100%-44px)]" referrerpolicy="no-referrer" allow="clipboard-write; microphone"></iframe></div>
     </div>
   </div>
 
@@ -280,54 +245,47 @@
         <button id="diagClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ff]" aria-label="Close">✕</button>
       </div>
       <form id="diagForm" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto">
-        <div><label class="text-sm font-medium">Year</label><input name="y" type="number" min="1980" max="2026" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 2016"></div>
+        <div><label class="text-sm font-medium">Year</label><input name="y" type="number" inputmode="numeric" min="1980" max="2026" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 2016"></div>
         <div><label class="text-sm font-medium">Make</label><input name="make" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., Toyota"></div>
         <div><label class="text-sm font-medium">Model</label><input name="model" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., Camry"></div>
         <div><label class="text-sm font-medium">Engine</label><input name="engine" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 2.5L I4"></div>
-        <div><label class="text-sm font-medium">Mileage (mi)</label><input name="mileage" type="number" min="0" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 120000"></div>
-        <div><label class="text-sm font-medium">ZIP</label><input name="zip" type="text" pattern="\\d{5}" class="mt-1 w-full rounded-xl border-gray-200" placeholder="5‑digit ZIP"></div>
+        <div><label class="text-sm font-medium">Mileage (mi)</label><input name="mileage" type="number" inputmode="numeric" min="0" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 120000"></div>
+        <div>
+          <label class="text-sm font-medium">ZIP</label>
+          <!-- FIX: proper pattern + helpers -->
+          <input name="zip" type="text" inputmode="numeric" autocomplete="postal-code"
+                 pattern="[0-9]{5}(-[0-9]{4})?" maxlength="10"
+                 class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 97068 or 97068-1234">
+          <p class="field-note">Enter 5‑digit ZIP or ZIP+4.</p>
+        </div>
         <div class="sm:col-span-2"><label class="text-sm font-medium">Budget</label>
-          <select name="budget" class="mt-1 w-full rounded-xl border-gray-200">
-            <option value="">No preference</option><option>DIY</option><option selected>Save $$</option><option>Premium</option>
-          </select>
+          <select name="budget" class="mt-1 w-full rounded-xl border-gray-200"><option value="">No preference</option><option>DIY</option><option selected>Save $$</option><option>Premium</option></select>
         </div>
 
         <!-- Symptom chips -->
         <div class="sm:col-span-2">
           <label class="text-sm font-medium">Quick add symptoms</label>
           <div id="symptomChips" class="mt-2 flex flex-wrap gap-2">
-            <span class="chip">Check engine flashing</span>
-            <span class="chip">Rough idle</span>
-            <span class="chip">No crank</span>
-            <span class="chip">Cranks no start</span>
-            <span class="chip">Overheating / steam</span>
-            <span class="chip">Coolant loss</span>
-            <span class="chip">Brake pedal to floor</span>
-            <span class="chip">Pulls when braking</span>
-            <span class="chip">Grinding while braking</span>
-            <span class="chip">Vibration 60–70 mph</span>
-            <span class="chip">Clicking on turns</span>
-            <span class="chip">Whining on turns</span>
-            <span class="chip">Battery light on</span>
-            <span class="chip">AC warm at idle</span>
-            <span class="chip">Fuel smell</span>
-            <span class="chip">Oil leak on driveway</span>
-            <span class="chip">Transmission slipping</span>
-            <span class="chip">EV isolation fault</span>
+            <span class="chip">Check engine flashing</span><span class="chip">Rough idle</span><span class="chip">No crank</span>
+            <span class="chip">Cranks no start</span><span class="chip">Overheating / steam</span><span class="chip">Coolant loss</span>
+            <span class="chip">Brake pedal to floor</span><span class="chip">Pulls when braking</span><span class="chip">Grinding while braking</span>
+            <span class="chip">Vibration 60–70 mph</span><span class="chip">Clicking on turns</span><span class="chip">Whining on turns</span>
+            <span class="chip">Battery light on</span><span class="chip">AC warm at idle</span><span class="chip">Fuel smell</span>
+            <span class="chip">Oil leak on driveway</span><span class="chip">Transmission slipping</span><span class="chip">EV isolation fault</span>
           </div>
         </div>
 
         <div class="sm:col-span-2">
           <label class="text-sm font-medium">Symptoms (required)</label>
           <textarea name="symptoms" id="symptomsBox" rows="3" required class="mt-1 w-full rounded-xl border-gray-200" placeholder="What are you experiencing? Sounds, smells, lights, when it happens..."></textarea>
-          <p class="mt-1 text-xs text-[var(--muted)]">Tip: tap chips above to add common symptoms.</p>
+          <p class="field-note">Tip: tap chips above to add common symptoms.</p>
         </div>
 
         <div class="sm:col-span-2 flex items-center justify-end gap-3 pt-2">
           <button type="button" id="diagCancel" class="rounded-xl px-4 h-10 bg-[#eef3ff]">Cancel</button>
           <button type="submit" class="btn-primary rounded-xl px-4 h-10">Start diagnosis</button>
         </div>
-        <p class="sm:col-span-2 text-xs text-[var(--muted)] mt-1">For safety‑critical symptoms, do not drive. Informational guidance only.</p>
+        <p class="sm:col-span-2 field-note">For safety‑critical symptoms, do not drive. Informational guidance only.</p>
       </form>
     </div>
   </div>
@@ -350,9 +308,10 @@
   <!-- Minimal JS: nav + hero rotation + chat + analytics + feedback + diagnosis -->
   <script>
     // --- Config: set these for production ---
-    const CHAT_URL    = "https://chat.example.com/widget"; // TODO: set to your BE chat URL
+    const CHAT_URL    = "https://chat.example.com/widget"; // TODO: your BE chat URL
     const TERMS_URL   = ""; // e.g., "https://carpanion.com/legal/terms"
     const PRIVACY_URL = ""; // e.g., "https://carpanion.com/legal/privacy"
+    const FEEDBACK_URL = "https://script.google.com/macros/s/AKfycbzDDovGSBCoOQTObOgaRafD6mPrNuzdkDx-Y7MMPKhczFgiAH7sdcMpMdcbhFrb1vWMvg/exec"; // Optional: Google Apps Script / webhook to Sheets
 
     // Mobile menu
     const btn = document.getElementById('menuBtn');
@@ -369,165 +328,163 @@
         "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
       ];
       let idx = 0, usingA = true, timer = null;
-      const a = document.getElementById('heroA');
-      const b = document.getElementById('heroB');
-
-      // Preload all
+      const a = document.getElementById('heroA'), b = document.getElementById('heroB');
       photos.slice(1).forEach(src => { const img = new Image(); img.src = src; });
-
-      function swap() {
-        const next = (idx + 1) % photos.length;
-        const nextSrc = photos[next];
-        const active = usingA ? a : b;
-        const hidden = usingA ? b : a;
-        hidden.src = nextSrc;
-        // Force reflow before fade for Safari
-        hidden.getBoundingClientRect();
-        active.classList.add('opacity-0');
-        hidden.classList.remove('opacity-0');
-        idx = next;
-        usingA = !usingA;
-      }
-      function start() { if (!timer) timer = setInterval(() => { if (!document.hidden) swap(); }, 6000); }
-      function stop()  { clearInterval(timer); timer = null; }
-      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+      function swap(){const next=(idx+1)%photos.length,nextSrc=photos[next],active=usingA?a:b,hidden=usingA?b:a; hidden.src=nextSrc; hidden.getBoundingClientRect(); active.classList.add('opacity-0'); hidden.classList.remove('opacity-0'); idx=next; usingA=!usingA;}
+      function start(){ if(!timer) timer=setInterval(()=>{ if(!document.hidden) swap(); },6000); }
+      function stop(){ clearInterval(timer); timer=null; }
+      document.addEventListener('visibilitychange', ()=>{ if(document.hidden) stop(); else start(); });
       start();
     })();
 
     // --- Analytics (PostHog compatible + optional webhook) ---
     (function () {
       const sessionId = crypto.randomUUID();
-      const INGEST_URL = ""; // optional webhook mirror
+      window.CARPANION = { sessionId }; // expose for other handlers
+      const INGEST_URL = ""; // optional mirror webhook
 
       const utm = Object.fromEntries(new URLSearchParams(location.search).entries());
       const common = {
-        channel: "web", referrer: document.referrer || "", session_id: sessionId,
-        utm_source: utm.utm_source || "", utm_medium: utm.utm_medium || "", utm_campaign: utm.utm_campaign || "",
-        utm_term: utm.utm_term || "", utm_content: utm.utm_content || ""
+        channel:"web", referrer:document.referrer||"", session_id:sessionId,
+        utm_source:utm.utm_source||"", utm_medium:utm.utm_medium||"", utm_campaign:utm.utm_campaign||"",
+        utm_term:utm.utm_term||"", utm_content:utm.utm_content||""
       };
       try { window.posthog?.register(common); } catch {}
-
-      const send = (event_name, props = {}) => {
-        const payload = { event_name, timestamp: new Date().toISOString(), ...common, ...props };
+      const send = (event_name, props={}) => {
+        const payload = { event_name, timestamp:new Date().toISOString(), ...common, ...props };
         try { window.posthog?.capture(event_name, payload); } catch {}
         if (INGEST_URL) {
-          navigator.sendBeacon?.(INGEST_URL, new Blob([JSON.stringify(payload)], { type: "application/json" })) ||
-          fetch(INGEST_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true });
-        } else {
-          console.log("[analytics]", payload);
-        }
+          navigator.sendBeacon?.(INGEST_URL, new Blob([JSON.stringify(payload)], {type:"application/json"})) ||
+          fetch(INGEST_URL, {method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify(payload), keepalive:true});
+        } else { console.log("[analytics]", payload); }
       };
 
       // session_start
-      send("session_start", { user_hash: "anon" });
+      send("session_start", { user_hash:"anon" });
 
       // phone_click
       document.addEventListener("click", (e) => {
-        const el = e.target.closest("[data-event='phone_click']");
-        if (!el) return;
-        send("phone_click", { shop_id: "call_agent", shop_name: "call_agent", phone_number: el.getAttribute("data-phone") || "" });
+        const el = e.target.closest("[data-event='phone_click']"); if (!el) return;
+        send("phone_click", { shop_id:"call_agent", shop_name:"call_agent", phone_number:el.getAttribute("data-phone") || "" });
       });
 
-      // Chat launcher + Diagnosis integration
+      // Chat
       const launcher = document.getElementById('chatLauncher');
       const chatModal = document.getElementById('chatModal');
       const chatFrame = document.getElementById('chatFrame');
       const chatBackdrop = document.getElementById('chatBackdrop');
       const chatClose = document.getElementById('chatClose');
-
-      function openChat(params = {}) {
+      function openChat(params={}) {
         if (!CHAT_URL) { alert("Chat not configured yet."); return; }
         chatModal.classList.remove('hidden');
         const url = new URL(CHAT_URL);
         url.searchParams.set("sid", sessionId);
-        for (const [k, v] of Object.entries(params)) {
-          if (v != null && String(v).trim() !== "") url.searchParams.set(k, String(v).trim());
-        }
+        for (const [k,v] of Object.entries(params)) { if (v!=null && String(v).trim()!=="") url.searchParams.set(k, String(v).trim()); }
         chatFrame.src = url.toString();
-        send("chat_open", { with_params: Object.keys(params).length > 0 });
+        send("chat_open", { with_params:Object.keys(params).length>0 });
       }
-      function closeChat() { chatModal.classList.add('hidden'); chatFrame.src = "about:blank"; }
-
+      function closeChat(){ chatModal.classList.add('hidden'); chatFrame.src="about:blank"; }
       launcher?.addEventListener('click', () => openChat());
       chatClose?.addEventListener('click', closeChat);
       chatBackdrop?.addEventListener('click', closeChat);
-      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !chatModal.classList.contains('hidden')) closeChat(); });
+      window.addEventListener('keydown', e => { if (e.key==='Escape' && !chatModal.classList.contains('hidden')) closeChat(); });
 
-      // Diagnosis modal wiring
-      const diagBtn = document.getElementById('startDiagBtn');
-      const diagModal = document.getElementById('diagModal');
-      const diagBackdrop = document.getElementById('diagBackdrop');
-      const diagClose = document.getElementById('diagClose');
-      const diagCancel = document.getElementById('diagCancel');
-      const diagForm = document.getElementById('diagForm');
-      const symptomsBox = document.getElementById('symptomsBox');
-      const chipsWrap = document.getElementById('symptomChips');
+      // Diagnosis modal
+      const diagBtn=document.getElementById('startDiagBtn'), diagModal=document.getElementById('diagModal'),
+            diagBackdrop=document.getElementById('diagBackdrop'), diagClose=document.getElementById('diagClose'),
+            diagCancel=document.getElementById('diagCancel'), diagForm=document.getElementById('diagForm'),
+            symptomsBox=document.getElementById('symptomsBox'), chipsWrap=document.getElementById('symptomChips');
 
-      const openDiag = () => { diagModal.classList.remove('hidden'); setTimeout(() => symptomsBox?.focus(), 50); };
-      const closeDiag = () => diagModal.classList.add('hidden');
+      const openDiag=()=>{ diagModal.classList.remove('hidden'); setTimeout(()=>symptomsBox?.focus(),50); };
+      const closeDiag=()=>diagModal.classList.add('hidden');
 
-      // Symptom chips → append de‑duplicated tokens to textarea
-      function addChipText(text) {
-        const current = symptomsBox.value.trim();
-        const tokens = current ? current.split(/,\s*/).map(s => s.trim()).filter(Boolean) : [];
-        if (!tokens.includes(text)) tokens.push(text);
-        symptomsBox.value = tokens.join(", ");
+      function addChipText(text){
+        const current=symptomsBox.value.trim();
+        const tokens=current? current.split(/,\s*/).map(s=>s.trim()).filter(Boolean):[];
+        if(!tokens.includes(text)) tokens.push(text);
+        symptomsBox.value=tokens.join(", ");
         send("symptom_chip_click", { text });
       }
-      chipsWrap?.addEventListener('click', (e) => {
-        const chip = e.target.closest('.chip'); if (!chip) return;
-        addChipText(chip.textContent.trim());
-      });
+      chipsWrap?.addEventListener('click', e => { const chip=e.target.closest('.chip'); if(!chip) return; addChipText(chip.textContent.trim()); });
 
       diagBtn?.addEventListener('click', openDiag);
       diagClose?.addEventListener('click', closeDiag);
       diagBackdrop?.addEventListener('click', closeDiag);
       diagCancel?.addEventListener('click', closeDiag);
-      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !diagModal.classList.contains('hidden')) closeDiag(); });
+      window.addEventListener('keydown', e => { if (e.key==='Escape' && !diagModal.classList.contains('hidden')) closeDiag(); });
 
-      diagForm?.addEventListener('submit', (e) => {
+      diagForm?.addEventListener('submit', e => {
         e.preventDefault();
-        const data = new FormData(diagForm);
-        const payload = {
-          y: data.get('y') || "", make: data.get('make') || "", model: data.get('model') || "", engine: data.get('engine') || "",
-          mileage: data.get('mileage') || "", zip: data.get('zip') || "", budget: data.get('budget') || "", symptoms: data.get('symptoms') || ""
+        const data=new FormData(diagForm);
+        const payload={
+          y:data.get('y')||"", make:data.get('make')||"", model:data.get('model')||"", engine:data.get('engine')||"",
+          mileage:data.get('mileage')||"", zip:data.get('zip')||"", budget:data.get('budget')||"", symptoms:data.get('symptoms')||""
         };
-        if (!payload.symptoms.trim()) { alert("Please enter your symptoms."); return; }
-        for (const [k,v] of Object.entries(payload)) { if (v && k !== "symptoms") send("slot_update", { slot_name: k, new_value: String(v) }); }
-        send("diagnosis_start", {
-          has_vehicle: !!(payload.y || payload.make || payload.model || payload.engine),
-          has_zip: !!payload.zip, budget: payload.budget || "", symptoms_len: payload.symptoms.length
-        });
-        closeDiag();
-        openChat(payload);
+        if(!payload.symptoms.trim()){ alert("Please enter your symptoms."); return; }
+        for(const [k,v] of Object.entries(payload)){ if(v && k!=="symptoms") send("slot_update", { slot_name:k, new_value:String(v) }); }
+        send("diagnosis_start", { has_vehicle:!!(payload.y||payload.make||payload.model||payload.engine), has_zip:!!payload.zip, budget:payload.budget||"", symptoms_len:payload.symptoms.length });
+        closeDiag(); openChat(payload);
       });
 
       // Legal links
-      const legalModal = document.getElementById('legalModal');
-      const legalBackdrop = document.getElementById('legalBackdrop');
-      const legalClose = document.getElementById('legalClose');
-      const termsLink = document.getElementById('termsLink');
-      const privacyLink = document.getElementById('privacyLink');
-      function openExternalOrModal(url, title) {
-        if (url) { window.open(url, "_blank", "noopener"); }
-        else { document.getElementById('legalTitle').textContent = title; legalModal.classList.remove('hidden'); }
-      }
-      termsLink?.addEventListener('click', (e) => { e.preventDefault(); openExternalOrModal(TERMS_URL, "Terms of Service (template)"); });
-      privacyLink?.addEventListener('click', (e) => { e.preventDefault(); openExternalOrModal(PRIVACY_URL, "Privacy Policy (template)"); });
-      legalBackdrop?.addEventListener('click', () => legalModal.classList.add('hidden'));
-      legalClose?.addEventListener('click', () => legalModal.classList.add('hidden'));
+      const legalModal=document.getElementById('legalModal'), legalBackdrop=document.getElementById('legalBackdrop'),
+            legalClose=document.getElementById('legalClose'), termsLink=document.getElementById('termsLink'),
+            privacyLink=document.getElementById('privacyLink');
+      function openExternalOrModal(url,title){ if(url){ window.open(url,"_blank","noopener"); } else { document.getElementById('legalTitle').textContent=title; legalModal.classList.remove('hidden'); } }
+      termsLink?.addEventListener('click', e=>{ e.preventDefault(); openExternalOrModal(TERMS_URL,"Terms of Service (template)"); });
+      privacyLink?.addEventListener('click', e=>{ e.preventDefault(); openExternalOrModal(PRIVACY_URL,"Privacy Policy (template)"); });
+      legalBackdrop?.addEventListener('click', ()=>legalModal.classList.add('hidden'));
+      legalClose?.addEventListener('click', ()=>legalModal.classList.add('hidden'));
 
-      // Feedback form → feedback_given
-      const form = document.getElementById('feedbackForm');
-      const thanks = document.getElementById('feedbackThanks');
-      form?.addEventListener('submit', (e) => {
+      // Feedback form → one submission per session + optional Sheets webhook
+      const form=document.getElementById('feedbackForm');
+      const btnSubmit=document.getElementById('feedbackSubmit');
+      const thanks=document.getElementById('feedbackThanks');
+      const onceMsg=document.getElementById('feedbackOnce');
+      const FB_KEY=`carpanion_feedback_${sessionId}`;
+
+      // gate if already submitted
+      function setFeedbackDisabled(disabled){ 
+        form.querySelectorAll('input,textarea,button').forEach(el=>el.disabled=disabled);
+        if(disabled){ btnSubmit?.classList.add('disabled'); onceMsg?.classList.remove('hidden'); } 
+        else { btnSubmit?.classList.remove('disabled'); onceMsg?.classList.add('hidden'); }
+      }
+      if(localStorage.getItem(FB_KEY)){ setFeedbackDisabled(true); }
+
+      form?.addEventListener('submit', async e => {
         e.preventDefault();
-        const data = new FormData(form);
-        const stars = Number(data.get('stars') || 0);
-        const comment = String(data.get('comment') || "");
-        const vote = stars >= 4 ? "up" : "down";
-        send("feedback_given", { vote, stars, comment_text: comment });
-        form.reset(); thanks?.classList.remove('hidden'); setTimeout(() => thanks?.classList.add('hidden'), 3000);
+        if(localStorage.getItem(FB_KEY)){ setFeedbackDisabled(true); return; }
+        const data=new FormData(form);
+        if (data.get('hp_website')) return; // honeypot
+        const stars=Number(data.get('stars')||0);
+        const comment=String(data.get('comment')||"");
+        const vote=stars>=4?"up":"down";
+
+        // Analytics
+        send("feedback_given", { vote, stars, comment_text:comment });
+
+        // Optional: send to spreadsheet webhook
+        if (FEEDBACK_URL) {
+          try {
+            await fetch(FEEDBACK_URL, {
+              method:"POST",
+              headers:{ "Content-Type":"application/json" },
+              body:JSON.stringify({
+                session_id:sessionId, stars, vote, comment,
+                user_agent:navigator.userAgent, referrer:document.referrer || "",
+                url:location.href, ts:new Date().toISOString()
+              })
+            });
+          } catch(err) {
+            console.warn("Feedback webhook failed:", err);
+          }
+        }
+
+        localStorage.setItem(FB_KEY,"1");
+        setFeedbackDisabled(true);
+        form.reset();
+        thanks?.classList.remove('hidden');
+        setTimeout(()=>thanks?.classList.add('hidden'), 3500);
       });
     })();
   </script>
