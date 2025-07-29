@@ -5,37 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Carpanion — Diagnose car issues & find trusted mechanics</title>
   <meta name="description" content="Carpanion helps you gauge severity, understand likely causes, and call a vetted shop fast." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%230c7ff2' d='M47.24 24 24 47.24.76 24 24 .76 47.24 24zM12.24 21h23.52L24 9.24 12.24 21z'/%3E%3C/svg%3E">
-  <!-- Fonts: one request, swap to avoid FOIT -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%230a7a4b' d='M47.24 24 24 47.24.76 24 24 .76 47.24 24zM12.24 21h23.52L24 9.24 12.24 21z'/%3E%3C/svg%3E">
+
+  <!-- Tailwind (CDN for MVP). For prod, compile to purge unused classes. -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <!-- Tailwind CDN for MVP. For prod, compile with Tailwind CLI to purge unused classes -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
   <!-- Preload hero for faster LCP -->
   <link rel="preload" as="image"
-        href="https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
-        imagesrcset="https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=800 800w,
-                     https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1200 1200w,
-                     https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600 1600w"
+        href="https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
+        imagesrcset="https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=800 800w,
+                     https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1200 1200w,
+                     https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1600 1600w"
         imagesizes="100vw" fetchpriority="high">
+
+  <!-- (Optional) PostHog snippet goes here to capture events automatically -->
 
   <style type="text/tailwindcss">
     :root {
-      --primary: #0c7ff2;
-      --secondary: #f0f8ff;
-      --text: #111418;
-      --muted: #60758a;
-      --bg: #ffffff;
+      /* Outdoorsy / Rivian‑ish palette */
+      --primary: #0a7a4b;       /* forest green */
+      --primary-ink: #0b3326;   /* deep pine */
+      --bg: #f6f5f1;            /* sand / off‑white */
+      --card: #ffffff;          /* card background */
+      --text: #0f1a17;          /* charcoal */
+      --muted: #5b6b63;         /* sage gray */
+      --ring: rgba(10, 122, 75, 0.35);
     }
     html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .btn-primary {
+      @apply inline-flex items-center justify-center rounded-xl font-bold focus:outline-none focus-visible:ring-2;
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #0a6e45; }
+    .btn-outline {
+      @apply inline-flex items-center justify-center rounded-xl font-bold border;
+      border-color: rgba(255,255,255,.9);
+      color: #fff;
+    }
+    .btn-outline:hover { @apply bg-white; color: var(--primary); }
+    .card { @apply rounded-2xl shadow-sm; background: var(--card); border: 1px solid #ecf0eb; }
+    .chip { @apply rounded-full px-3 py-1 text-xs font-semibold; background: #eaf5ef; color: var(--primary-ink); cursor: pointer; }
+    .chip:hover { background:#dff0e7; }
+    .glass { background: rgba(255,255,255,0.75); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
   </style>
 </head>
 <body class="bg-[var(--bg)] text-[var(--text)]">
   <div class="min-h-dvh flex flex-col">
     <!-- Header -->
-    <header class="sticky top-0 z-40 border-b border-[#f0f2f5] bg-white/80 backdrop-blur-sm">
+    <header class="sticky top-0 z-40 border-b border-[#e9efe9] glass">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
         <a href="#" class="flex items-center gap-3" aria-label="Carpanion home">
           <svg class="h-8 w-8 text-[var(--primary)]" viewBox="0 0 48 48" aria-hidden="true">
@@ -47,27 +70,29 @@
         <nav class="hidden md:flex items-center gap-8" aria-label="Main">
           <a href="#how" class="text-sm font-medium hover:text-[var(--primary)]">How it works</a>
           <a href="#why" class="text-sm font-medium hover:text-[var(--primary)]">Why us</a>
+          <a href="#reviews" class="text-sm font-medium hover:text-[var(--primary)]">Reviews</a>
           <a href="#contact" class="text-sm font-medium hover:text-[var(--primary)]">Contact</a>
         </nav>
 
         <div class="flex items-center gap-3">
           <a href="tel:+15705399931"
              data-event="phone_click"
-             data-phone="tel:+15705399931"
-             class="inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-bold text-white bg-[var(--primary)] hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+             data-phone="+15705399931"
+             class="btn-primary h-10 rounded-xl px-4 text-sm focus-visible:ring-[var(--primary)]">
             Call now
           </a>
-          <button id="menuBtn" class="md:hidden size-10 grid place-items-center rounded-md hover:bg-gray-100" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
+          <button id="menuBtn" class="md:hidden size-10 grid place-items-center rounded-lg hover:bg-[#eef3ef]" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
             <svg class="size-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </button>
         </div>
       </div>
-      <div id="mobileNav" class="md:hidden hidden border-t border-[#f0f2f5]">
+      <div id="mobileNav" class="md:hidden hidden border-t border-[#e9efe9] bg-white">
         <div class="px-4 py-3 flex flex-col gap-2">
           <a href="#how" class="py-2">How it works</a>
           <a href="#why" class="py-2">Why us</a>
+          <a href="#reviews" class="py-2">Reviews</a>
           <a href="#contact" class="py-2">Contact</a>
         </div>
       </div>
@@ -77,27 +102,31 @@
       <!-- Hero -->
       <section class="relative isolate">
         <img
-          src="https://images.unsplash.com/photo-1553974325-06a4b1356b69?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
+          src="https://images.unsplash.com/photo-1519683109079-d5f539e1546e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3"
           alt=""
           class="absolute inset-0 -z-10 h-full w-full object-cover"
           loading="eager" decoding="async" fetchpriority="high">
-        <div class="absolute inset-0 -z-10 bg-black/60"></div>
+        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/55 to-[#0b3326]/70"></div>
 
         <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center text-white">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
+          <span class="chip select-none">Beta</span>
+          <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
             Diagnose car issues and find trustworthy mechanics
           </h1>
           <p class="mt-6 text-lg sm:text-xl text-gray-200">
-            Clear severity, likely causes, and a short list of vetted shops—fast.
+            Clear severity, likely causes, and a shortlist of vetted shops—fast.
           </p>
           <div class="mt-10 flex flex-wrap justify-center gap-4">
             <a href="tel:+15705399931"
                data-event="phone_click"
-               data-phone="tel:+15705399931"
-               class="inline-flex h-12 items-center justify-center rounded-md px-6 text-base font-bold text-white bg-[var(--primary)] hover:bg-blue-600">
+               data-phone="+15705399931"
+               class="btn-primary h-12 rounded-xl px-6 text-base">
               Tap to call now
             </a>
-            <a href="#how" class="inline-flex h-12 items-center justify-center rounded-md px-6 text-base font-bold border border-white text-white hover:bg-white hover:text-[var(--primary)]">
+            <button id="startDiagBtn" class="btn-primary h-12 rounded-xl px-6 text-base">
+              Start diagnosis
+            </button>
+            <a href="#how" class="btn-outline h-12 rounded-xl px-6 text-base border-white">
               Learn more
             </a>
           </div>
@@ -108,100 +137,100 @@
       <section id="how" class="px-4 sm:px-6 lg:px-8 py-16">
         <div class="mx-auto max-w-5xl text-center">
           <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">How Carpanion Works</h2>
-          <p class="mt-4 text-lg text-[var(--muted)]">
-            A focused flow that removes guesswork and gets you to a great shop.
-          </p>
+          <p class="mt-4 text-lg text-[var(--muted)]">A focused flow that removes guesswork and gets you to the right shop.</p>
         </div>
 
         <div class="mx-auto max-w-5xl mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="rounded-lg bg-[var(--secondary)] p-8 text-center shadow-sm">
+          <div class="card p-8 text-center">
             <div class="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-[var(--primary)] text-white font-bold">1</div>
-            <h3 class="text-xl font-bold">Fact Sheet</h3>
-            <p class="mt-2 text-sm text-[var(--muted)]">Year/make/model, mileage, ZIP, symptoms, budget.</p>
+            <h3 class="text-xl font-bold">Tell Carpanion your symptoms</h3>
+            <p class="mt-2 text-sm text-[var(--muted)]">Add a few basics—year/make/model/engine, mileage, ZIP—plus what you’re experiencing.</p>
           </div>
-          <div class="rounded-lg bg-[var(--secondary)] p-8 text-center shadow-sm">
+          <div class="card p-8 text-center">
             <div class="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-[var(--primary)] text-white font-bold">2</div>
-            <h3 class="text-xl font-bold">Severity & Causes</h3>
-            <p class="mt-2 text-sm text-[var(--muted)]">Low / Moderate / Critical with ≤25‑word explainer + top 3 likely causes.</p>
+            <h3 class="text-xl font-bold">Get a quick, accurate diagnosis</h3>
+            <p class="mt-2 text-sm text-[var(--muted)]">We return a severity level (Low / Moderate / Critical) and the top 3 likely causes.</p>
           </div>
-          <div class="rounded-lg bg-[var(--secondary)] p-8 text-center shadow-sm">
+          <div class="card p-8 text-center">
             <div class="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-[var(--primary)] text-white font-bold">3</div>
-            <h3 class="text-xl font-bold">Ranked Shops</h3>
-            <p class="mt-2 text-sm text-[var(--muted)]">Vetted by rating, distance, and review similarity. Tap to call.</p>
+            <h3 class="text-xl font-bold">Get referred to top shops nearby</h3>
+            <p class="mt-2 text-sm text-[var(--muted)]">We surface highly rated, close‑by shops for your issue—call and repair with confidence.</p>
           </div>
         </div>
       </section>
 
       <!-- Why choose us -->
-      <section id="why" class="bg-white px-4 sm:px-6 lg:px-8 py-16">
+      <section id="why" class="px-4 sm:px-6 lg:px-8 py-16">
         <div class="mx-auto max-w-5xl text-center">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Why Choose Carpanion?</h2>
-          <p class="mt-4 text-lg text-[var(--muted)]">Transparency, quality, and support built into the flow.</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Why Carpanion?</h2>
         </div>
-
         <div class="mx-auto max-w-5xl mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <figure class="flex flex-col">
-            <div class="h-56 w-full overflow-hidden rounded-lg">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKDkggxDQ6Js9KQUe5eiycrRBbA2GPP3qNizG9COoQJ7AiDhn8hi79TByTMPLBwxOUBjMTpb4uwyK3YVMAkZ2nYScpNMs4HPJj4ahtF1BMSlUBYl8zfbZ_ACk8C2GHY5jkEPf9FwRs2O8_iMgguyG54GnH0NCPzBRwyLyWhlSo1fzDJgI0-bYWYvbcjrCjWId80ADjl8TyKQfQ7Vv_wxmR5xCVKkWP-xzRXYMatd_WSLmUmBOiUjO8-ev9AHrztQbP_9SimLly0vk"
-                   alt="Mechanic working on an engine"
-                   class="size-full object-cover transition-transform duration-300 hover:scale-105"
-                   loading="lazy" decoding="async">
-            </div>
-            <figcaption class="mt-4">
-              <h3 class="text-xl font-semibold">Transparency</h3>
-              <p class="mt-2 text-base text-[var(--muted)]">Understand issues and costs upfront.</p>
-            </figcaption>
-          </figure>
+          <div class="card overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="" class="h-56 w-full object-cover">
+            <div class="p-5"><h3 class="text-xl font-semibold">Transparency</h3><p class="mt-2 text-[var(--muted)]">Understand your car’s condition and likely repair paths upfront.</p></div>
+          </div>
+          <div class="card overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1515920585569-0129e8d9a86b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="" class="h-56 w-full object-cover">
+            <div class="p-5"><h3 class="text-xl font-semibold">Quality</h3><p class="mt-2 text-[var(--muted)]">Shops are filtered by rating, distance, and review similarity.</p></div>
+          </div>
+          <div class="card overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3" alt="" class="h-56 w-full object-cover">
+            <div class="p-5"><h3 class="text-xl font-semibold">Support</h3><p class="mt-2 text-[var(--muted)]">We guide you with clear next steps and offer to dial a shop.</p></div>
+          </div>
+        </div>
+      </section>
 
-          <figure class="flex flex-col">
-            <div class="h-56 w-full overflow-hidden rounded-lg">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkgTgC0cCU4yr2C3e8Tcma193stS0vV4uVVreF4qQs3hmQY5j4RvMVqbUjkXsphgn7l0-DeDNB4EDj3GFMiyjtjbA5itf-0pJR7G6zBaWqAEf7bgSYyJlrJTJcXOubHVXbHJjhbO43xuk1Exo-12ndUBuCqG3qgRhs-MJ7VfchVzFzpdq2aquAYRQW8yDgFeR9xMuOqykiMoQ06AfoWIQ72kCMeCHr8VMcKInqi4lU4oOZhtduIQrshYnpi2PDlR2wGQHctPTRPt0"
-                   alt="Mechanic examining a car part"
-                   class="size-full object-cover transition-transform duration-300 hover:scale-105"
-                   loading="lazy" decoding="async">
-            </div>
-            <figcaption class="mt-4">
-              <h3 class="text-xl font-semibold">Quality</h3>
-              <p class="mt-2 text-base text-[var(--muted)]">Certified shops, re‑ranked for your issue.</p>
-            </figcaption>
-          </figure>
+      <!-- Reviews & Feedback Loop -->
+      <section id="reviews" class="px-4 sm:px-6 lg:px-8 py-16 bg-white/70">
+        <div class="mx-auto max-w-5xl">
+          <div class="text-center">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">What drivers say</h2>
+            <p class="mt-4 text-lg text-[var(--muted)]">Help us improve—leave feedback after you call.</p>
+          </div>
 
-          <figure class="flex flex-col">
-            <div class="h-56 w-full overflow-hidden rounded-lg">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC99pYB0FV_dd6D0wDAOLg17U4rK_WXSeu18EM6LqFGtYFxaNEFO_FDp0NGqFN7yg74IevKbwLtSNSOFNzDAB4c6M7CftjdiVPcL22vwaV9KSED6CLLBb-URCe-LGFU2lVBcXpAfLSZt-bP7te7C8_0o8pFLRGPwg_jI13mx_SIQmpQsackrlq8lyw7_UzjEiZA34QLgu-QR310WC6XiKpZ-QSbLFNv5zg5H-Z_NfJWIYKZbitCoCd0uUCRIekdyWaHoBkm4RCp5vM"
-                   alt="Customer support on a call"
-                   class="size-full object-cover transition-transform duration-300 hover:scale-105"
-                   loading="lazy" decoding="async">
+          <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <figure class="card p-5"><blockquote class="text-[var(--primary-ink)]">“Told me it was likely a coil, and the shop confirmed it. Back on the road same day.”</blockquote><figcaption class="mt-3 text-sm text-[var(--muted)]">— Alex P., Portland</figcaption></figure>
+            <figure class="card p-5"><blockquote class="text-[var(--primary-ink)]">“The ‘Critical’ warning probably saved my engine. Tow was the right call.”</blockquote><figcaption class="mt-3 text-sm text-[var(--muted)]">— Priya R., Seattle</figcaption></figure>
+            <figure class="card p-5"><blockquote class="text-[var(--primary-ink)]">“Loved the short list of shops—picked one and booked in 3 minutes.”</blockquote><figcaption class="mt-3 text-sm text-[var(--muted)]">— Chris M., Austin</figcaption></figure>
+          </div>
+
+          <!-- Feedback form -->
+          <form id="feedbackForm" class="card mt-10 p-5">
+            <h3 class="text-lg font-semibold">How helpful was Carpanion?</h3>
+            <div class="mt-3 flex items-center gap-2" role="radiogroup" aria-label="Rating">
+              <label class="flex items-center gap-1"><input type="radio" name="stars" value="1" class="text-[var(--primary)]"> 1</label>
+              <label class="flex items-center gap-1"><input type="radio" name="stars" value="2" class="text-[var(--primary)]"> 2</label>
+              <label class="flex items-center gap-1"><input type="radio" name="stars" value="3" class="text-[var(--primary)]"> 3</label>
+              <label class="flex items-center gap-1"><input type="radio" name="stars" value="4" class="text-[var(--primary)]"> 4</label>
+              <label class="flex items-center gap-1"><input type="radio" name="stars" value="5" class="text-[var(--primary)]"> 5</label>
             </div>
-            <figcaption class="mt-4">
-              <h3 class="text-xl font-semibold">Support</h3>
-              <p class="mt-2 text-base text-[var(--muted)]">We guide you through repair decisions.</p>
-            </figcaption>
-          </figure>
+            <textarea name="comment" rows="3" class="mt-3 w-full rounded-xl border-gray-200" placeholder="Optional: what worked or didn’t?"></textarea>
+            <div class="mt-4 flex items-center gap-3">
+              <button class="btn-primary h-10 rounded-xl px-4" type="submit">Submit</button>
+              <p id="feedbackThanks" class="text-sm text-[var(--muted)] hidden">Thanks for your feedback!</p>
+            </div>
+          </form>
         </div>
       </section>
 
       <!-- Contact / Footer CTA -->
-      <section id="contact" class="bg-gray-50">
+      <section id="contact" class="bg-white">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           <div class="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
             <div class="text-center sm:text-left">
               <h3 class="text-2xl font-bold">Ready to talk to a shop?</h3>
               <p class="text-[var(--muted)] mt-1">Tap to call now. Typical wait &lt; 1 minute.</p>
             </div>
-            <a href="tel:+15705399931"
-               data-event="phone_click"
-               data-phone="tel:+15705399931"
-               class="inline-flex h-12 items-center justify-center rounded-md px-6 text-base font-bold text-white bg-[var(--primary)] hover:bg-blue-600">
+            <a href="tel:+15705399931" data-event="phone_click" data-phone="+15705399931" class="btn-primary h-12 rounded-xl px-6 text-base">
               Call +1 (570) 539‑9931
             </a>
           </div>
 
-          <div class="mt-8 flex flex-col items-center justify-between gap-6 sm:flex-row border-t border-[#e9edf1] pt-6">
+          <div class="mt-8 flex flex-col items-center justify-between gap-6 sm:flex-row border-t border-[#e9efe9] pt-6">
             <div class="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2">
-              <a href="#" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Privacy</a>
-              <a href="#" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Terms</a>
-              <a href="#" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Contact</a>
+              <a id="privacyLink" href="#" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Privacy</a>
+              <a id="termsLink" href="#" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Terms</a>
+              <a href="#contact" class="text-base text-[var(--muted)] hover:text-[var(--primary)]">Contact</a>
             </div>
             <p class="text-base text-[var(--muted)]">© 2025 Carpanion. All rights reserved.</p>
           </div>
@@ -210,51 +239,257 @@
     </main>
   </div>
 
-  <!-- Minimal JS: mobile nav + analytics shim -->
+  <!-- Chat launcher -->
+  <button id="chatLauncher" class="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full px-4 py-3 shadow-lg"
+          style="background: var(--primary); color: #fff;">
+    <span class="inline-flex items-center justify-center rounded-full bg-white/90 text-[var(--primary)]" style="width:32px;height:32px">
+      <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path fill="currentColor" d="M7 10h10l1 3H6l1-3Zm1-5h8l1 3H7l1-3Zm-3 9h14l-1 3H6l-1-3Z"/></svg>
+    </span>
+    <span class="font-semibold">Chat with Carpanion</span>
+  </button>
+
+  <!-- Chat modal -->
+  <div id="chatModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/40" id="chatBackdrop"></div>
+    <div class="absolute right-4 bottom-20 sm:right-8 sm:bottom-8 w-[min(680px,95vw)] h-[min(70vh,720px)] card overflow-hidden">
+      <div class="flex items-center justify-between px-4 py-2 border-b">
+        <div class="flex items-center gap-2">
+          <div class="rounded-full bg-[var(--primary)] text-white grid place-items-center" style="width:28px;height:28px">
+            <svg viewBox="0 0 24 24" class="w-4 h-4" aria-hidden="true"><path fill="currentColor" d="M7 10h10l1 3H6l1-3Z"/></svg>
+          </div>
+          <p class="font-semibold">Carpanion Assistant</p>
+          <span class="chip select-none">Live beta</span>
+        </div>
+        <button id="chatClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ef]" aria-label="Close chat">✕</button>
+      </div>
+      <div class="h-full">
+        <iframe id="chatFrame" title="Carpanion chat" src="about:blank" class="w-full h-[calc(100%-44px)]" referrerpolicy="no-referrer" allow="clipboard-write; microphone"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagnosis (Fact Sheet) modal -->
+  <div id="diagModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/40" id="diagBackdrop"></div>
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(720px,95vw)] card">
+      <div class="flex items-center justify-between px-4 py-3 border-b">
+        <h3 class="text-lg font-semibold">Start a quick diagnosis</h3>
+        <button id="diagClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ef]" aria-label="Close">✕</button>
+      </div>
+      <form id="diagForm" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><label class="text-sm font-medium">Year</label><input name="y" type="number" min="1980" max="2026" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 2016"></div>
+        <div><label class="text-sm font-medium">Make</label><input name="make" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., Toyota"></div>
+        <div><label class="text-sm font-medium">Model</label><input name="model" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., Camry"></div>
+        <div><label class="text-sm font-medium">Engine</label><input name="engine" type="text" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 2.5L I4"></div>
+        <div><label class="text-sm font-medium">Mileage (mi)</label><input name="mileage" type="number" min="0" class="mt-1 w-full rounded-xl border-gray-200" placeholder="e.g., 120000"></div>
+        <div><label class="text-sm font-medium">ZIP</label><input name="zip" type="text" pattern="\\d{5}" class="mt-1 w-full rounded-xl border-gray-200" placeholder="5‑digit ZIP"></div>
+        <div class="sm:col-span-2"><label class="text-sm font-medium">Budget</label>
+          <select name="budget" class="mt-1 w-full rounded-xl border-gray-200">
+            <option value="">No preference</option><option>DIY</option><option selected>Save $$</option><option>Premium</option>
+          </select>
+        </div>
+
+        <!-- Symptom chips -->
+        <div class="sm:col-span-2">
+          <label class="text-sm font-medium">Quick add symptoms</label>
+          <div id="symptomChips" class="mt-2 flex flex-wrap gap-2">
+            <span class="chip">Check engine flashing</span>
+            <span class="chip">Rough idle</span>
+            <span class="chip">No crank</span>
+            <span class="chip">Cranks no start</span>
+            <span class="chip">Overheating / steam</span>
+            <span class="chip">Coolant loss</span>
+            <span class="chip">Brake pedal to floor</span>
+            <span class="chip">Pulls when braking</span>
+            <span class="chip">Grinding while braking</span>
+            <span class="chip">Vibration 60–70 mph</span>
+            <span class="chip">Clicking on turns</span>
+            <span class="chip">Whining on turns</span>
+            <span class="chip">Battery light on</span>
+            <span class="chip">AC warm at idle</span>
+            <span class="chip">Fuel smell</span>
+            <span class="chip">Oil leak on driveway</span>
+            <span class="chip">Transmission slipping</span>
+            <span class="chip">EV isolation fault</span>
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label class="text-sm font-medium">Symptoms (required)</label>
+          <textarea name="symptoms" id="symptomsBox" rows="3" required class="mt-1 w-full rounded-xl border-gray-200" placeholder="What are you experiencing? Sounds, smells, lights, when it happens..."></textarea>
+          <p class="mt-1 text-xs text-[var(--muted)]">Tip: tap chips above to add common symptoms.</p>
+        </div>
+
+        <div class="sm:col-span-2 flex items-center justify-end gap-3 pt-2">
+          <button type="button" id="diagCancel" class="rounded-xl px-4 h-10 bg-[#eef3ef]">Cancel</button>
+          <button type="submit" class="btn-primary rounded-xl px-4 h-10">Start diagnosis</button>
+        </div>
+        <p class="sm:col-span-2 text-xs text-[var(--muted)] mt-1">For safety‑critical symptoms, do not drive. Informational guidance only.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Legal modals (used only if URLs not configured) -->
+  <div id="legalModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/40" id="legalBackdrop"></div>
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(920px,95vw)] max-h-[80vh] overflow-auto card">
+      <div class="flex items-center justify-between px-4 py-3 border-b"><h3 id="legalTitle" class="text-lg font-semibold">Legal</h3><button id="legalClose" class="rounded-md px-2 py-1 hover:bg-[#eef3ef]" aria-label="Close">✕</button></div>
+      <div id="legalBody" class="p-5 text-sm leading-6 text-[var(--muted)]">
+        <p><strong>Template only — not legal advice.</strong> Replace this modal by configuring external URLs for your Privacy Policy and Terms of Service.</p>
+        <h4 class="mt-4 font-semibold">Privacy Policy (template)</h4>
+        <p>We collect limited usage data to improve service quality (e.g., session events, phone click). Data may be processed by analytics providers you configure. Do not submit sensitive personal information. See the full policy you provide for details on data retention, sharing, and rights.</p>
+        <h4 class="mt-4 font-semibold">Terms of Service (template)</h4>
+        <p>Carpanion provides informational guidance only and is not a substitute for professional diagnosis. For safety‑critical issues, stop driving and seek assistance. By using the service, you agree to any fees, acceptable use, and dispute resolution terms in your full ToS.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimal JS: mobile nav + chat + analytics + feedback + diagnosis -->
   <script>
+    // --- Config: set these for production ---
+    const CHAT_URL    = "https://chat.example.com/widget"; // TODO: set to your BE chat URL
+    const TERMS_URL   = ""; // e.g., "https://carpanion.com/legal/terms"
+    const PRIVACY_URL = ""; // e.g., "https://carpanion.com/legal/privacy"
+
     // Mobile menu
     const btn = document.getElementById('menuBtn');
     const nav = document.getElementById('mobileNav');
-    if (btn) {
-      btn.addEventListener('click', () => {
-        const open = nav.classList.toggle('hidden') ? 'false' : 'true';
-        btn.setAttribute('aria-expanded', open);
-      });
-    }
+    if (btn) btn.addEventListener('click', () => { const open = nav.classList.toggle('hidden') ? 'false' : 'true'; btn.setAttribute('aria-expanded', open); });
 
-    // --- Analytics shim aligned to PRD ---
+    // --- Analytics (PostHog compatible + optional webhook) ---
     (function () {
       const sessionId = crypto.randomUUID();
-      // Set this later to your Cloud Run Event Ingest API (TR1)
-      const INGEST_URL = ""; // e.g., "https://events.carpanion.app/ingest"
-      const send = (event_name, props={}) => {
-        const payload = {
-          event_name,
-          timestamp: new Date().toISOString(),
-          session_id: sessionId,
-          channel: "web",
-          ...props
-        };
+      const INGEST_URL = ""; // optional webhook mirror
+
+      const utm = Object.fromEntries(new URLSearchParams(location.search).entries());
+      const common = {
+        channel: "web", referrer: document.referrer || "", session_id: sessionId,
+        utm_source: utm.utm_source || "", utm_medium: utm.utm_medium || "", utm_campaign: utm.utm_campaign || "",
+        utm_term: utm.utm_term || "", utm_content: utm.utm_content || ""
+      };
+      try { window.posthog?.register(common); } catch {}
+
+      const send = (event_name, props = {}) => {
+        const payload = { event_name, timestamp: new Date().toISOString(), ...common, ...props };
+        try { window.posthog?.capture(event_name, payload); } catch {}
         if (INGEST_URL) {
           navigator.sendBeacon?.(INGEST_URL, new Blob([JSON.stringify(payload)], { type: "application/json" })) ||
           fetch(INGEST_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true });
         } else {
-          console.log("[analytics]", payload); // fallback during MVP
+          console.log("[analytics]", payload);
         }
       };
 
-      // session_start on load
-      send("session_start", { user_hash: "anon", ip_city: "", ip_country: "" });
+      // session_start
+      send("session_start", { user_hash: "anon" });
 
-      // phone_click on any CTA with data-event="phone_click"
+      // phone_click
       document.addEventListener("click", (e) => {
         const el = e.target.closest("[data-event='phone_click']");
         if (!el) return;
-        send("phone_click", {
-          shop_id: "unknown",
-          shop_name: "call_agent",
-          phone_number: el.getAttribute("data-phone") || ""
+        send("phone_click", { shop_id: "call_agent", shop_name: "call_agent", phone_number: el.getAttribute("data-phone") || "" });
+      });
+
+      // Chat launcher
+      const launcher = document.getElementById('chatLauncher');
+      const modal = document.getElementById('chatModal');
+      const frame = document.getElementById('chatFrame');
+      const backdrop = document.getElementById('chatBackdrop');
+      const closeBtn = document.getElementById('chatClose');
+
+      function openChat(params = {}) {
+        if (!CHAT_URL) { alert("Chat not configured yet."); return; }
+        modal.classList.remove('hidden');
+        const url = new URL(CHAT_URL);
+        url.searchParams.set("sid", sessionId);
+        for (const [k, v] of Object.entries(params)) {
+          if (v != null && String(v).trim() !== "") url.searchParams.set(k, String(v).trim());
+        }
+        frame.src = url.toString();
+        send("chat_open", { with_params: Object.keys(params).length > 0 });
+      }
+      function closeChat() { modal.classList.add('hidden'); frame.src = "about:blank"; }
+
+      launcher?.addEventListener('click', () => openChat());
+      closeBtn?.addEventListener('click', closeChat);
+      backdrop?.addEventListener('click', closeChat);
+      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeChat(); });
+
+      // Diagnosis modal wiring
+      const diagBtn = document.getElementById('startDiagBtn');
+      const diagModal = document.getElementById('diagModal');
+      const diagBackdrop = document.getElementById('diagBackdrop');
+      const diagClose = document.getElementById('diagClose');
+      const diagCancel = document.getElementById('diagCancel');
+      const diagForm = document.getElementById('diagForm');
+      const symptomsBox = document.getElementById('symptomsBox');
+      const chipsWrap = document.getElementById('symptomChips');
+
+      const openDiag = () => diagModal.classList.remove('hidden');
+      const closeDiag = () => diagModal.classList.add('hidden');
+
+      // Symptom chips → append de‑duplicated tokens to textarea
+      function addChipText(text) {
+        const current = symptomsBox.value.trim();
+        const tokens = current ? current.split(/,\\s*/).map(s => s.trim()).filter(Boolean) : [];
+        if (!tokens.includes(text)) tokens.push(text);
+        symptomsBox.value = tokens.join(", ");
+        send("symptom_chip_click", { text });
+      }
+      chipsWrap?.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip'); if (!chip) return;
+        addChipText(chip.textContent.trim());
+      });
+
+      diagBtn?.addEventListener('click', openDiag);
+      diagClose?.addEventListener('click', closeDiag);
+      diagBackdrop?.addEventListener('click', closeDiag);
+      diagCancel?.addEventListener('click', closeDiag);
+      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !diagModal.classList.contains('hidden')) closeDiag(); });
+
+      diagForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(diagForm);
+        const payload = {
+          y: data.get('y') || "", make: data.get('make') || "", model: data.get('model') || "", engine: data.get('engine') || "",
+          mileage: data.get('mileage') || "", zip: data.get('zip') || "", budget: data.get('budget') || "", symptoms: data.get('symptoms') || ""
+        };
+        if (!payload.symptoms.trim()) { alert("Please enter your symptoms."); return; }
+        for (const [k,v] of Object.entries(payload)) { if (v && k !== "symptoms") send("slot_update", { slot_name: k, new_value: String(v) }); }
+        send("diagnosis_start", {
+          has_vehicle: !!(payload.y || payload.make || payload.model || payload.engine),
+          has_zip: !!payload.zip, budget: payload.budget || "", symptoms_len: payload.symptoms.length
         });
+        closeDiag();
+        openChat(payload);
+      });
+
+      // Legal links
+      const legalModal = document.getElementById('legalModal');
+      const legalBackdrop = document.getElementById('legalBackdrop');
+      const legalClose = document.getElementById('legalClose');
+      const termsLink = document.getElementById('termsLink');
+      const privacyLink = document.getElementById('privacyLink');
+      function openExternalOrModal(url, title) {
+        if (url) { window.open(url, "_blank", "noopener"); }
+        else { document.getElementById('legalTitle').textContent = title; legalModal.classList.remove('hidden'); }
+      }
+      termsLink?.addEventListener('click', (e) => { e.preventDefault(); openExternalOrModal(TERMS_URL, "Terms of Service (template)"); });
+      privacyLink?.addEventListener('click', (e) => { e.preventDefault(); openExternalOrModal(PRIVACY_URL, "Privacy Policy (template)"); });
+      legalBackdrop?.addEventListener('click', () => legalModal.classList.add('hidden'));
+      legalClose?.addEventListener('click', () => legalModal.classList.add('hidden'));
+
+      // Feedback form → feedback_given
+      const form = document.getElementById('feedbackForm');
+      const thanks = document.getElementById('feedbackThanks');
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const stars = Number(data.get('stars') || 0);
+        const comment = String(data.get('comment') || "");
+        const vote = stars >= 4 ? "up" : "down";
+        send("feedback_given", { vote, stars, comment_text: comment });
+        form.reset(); thanks?.classList.remove('hidden'); setTimeout(() => thanks?.classList.add('hidden'), 3000);
       });
     })();
   </script>
